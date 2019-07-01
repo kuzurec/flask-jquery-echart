@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+    <script type="text/javascript" src="../static/js/rem.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+	<title>互联网大数据分析-公司</title>
+</head>
+<body style="visibility: hidden;">
+    <header class="myheader">
+        <nav class="nav_box">
+            <ul class="myul">
+                <li>
+                    <a href="index1" >主页</a>
+                </li>
+                <li>
+                    <a href="city">城市</a>
+                </li>
+                <li>
+                    <a href="company" class="myactive">公司</a>
+                </li>
+                <li>
+                    <a href="job">岗位</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="center-top">
+                <h1>互联网职位大数据分析</h1>
+        </div>
+    </header>
+    <div class="mycontainer">
+        <div class="switch-box">
+            <ul>
+                <li>融资情况</li>
+                <li>行业聚类</li>
+                <li>地域分布</li>
+            </ul>
+        </div>
+        <div class="mybox">
+            <div class="chart-box">
+                <div id="chart5" style="width:100%;height:100%;"></div>
+            </div>
+            <div class="chart-box ">
+                <div id="chart4" style="width:100%;height:100%;"></div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../static/js/echarts.min.js"></script>
+<script type="text/javascript" src="../static/js/china.js"></script>
+<script type="text/javascript" src="../static/js/base.js"></script>
+<script>
+    //切换卡片功能
+    $(window).on("load",function(){
+        $("body").css('visibility', 'visible');
+        for(let i=0;i<$(".switch-box ul li").length;i++){
+            $(".mybox").find(".chart-box").eq(i).hide();
+        }
+        $(".switch-box ul li:eq(0)").css("border-bottom","3px solid #142132"); //更改底部样式
+        $(".switch-box ul li:eq(0)").css("border-top","2px solid #0E94EA");
+        $(".mybox").find(".chart-box").eq(0).show(); //默认第一个显示
+        for(let i=0;i<$(".switch-box ul li").length;i++){
+            $(".switch-box ul").find("li").eq(i).on("click",function(){  //点击事件
+             for(let j=0;j<$(".switch-box ul li").length;j++){
+                 $(".mybox").find(".chart-box").eq(j).hide();
+                 $(".switch-box ul").find("li").eq(j).css("border-bottom","");
+                 $(".switch-box ul").find("li").eq(j).css("border-top","");
+
+             };
+            $(".mybox").find(".chart-box").eq(i).show();
+             $(".switch-box ul").find("li").eq(i).css("border-bottom","3px solid #142132");
+             $(".switch-box ul").find("li").eq(i).css("border-top","2px solid #0E94EA");
+     })
+    }
+ });
+
+</script>
+</body>
+</html>
