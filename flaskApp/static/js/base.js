@@ -382,7 +382,7 @@ option = {
                     }
                 }
             },
-            barWidth: 12,
+            barWidth: 8,
             itemStyle: {
                 normal: {
                     color: function(params) {
@@ -398,7 +398,7 @@ option = {
             yAxisIndex: 1,
             barGap: '-100%',
             data: [99, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5],
-            barWidth: 20,
+            barWidth: 15,
             itemStyle: {
                 normal: {
                     color: '#0e2147',
@@ -412,7 +412,7 @@ option = {
             yAxisIndex: 2,
             barGap: '-100%',
             data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-            barWidth: 24,
+            barWidth: 17,
             itemStyle: {
                 normal: {
                     color: function(params) {
@@ -430,7 +430,7 @@ option = {
             hoverAnimation: false,
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             yAxisIndex: 2,
-            symbolSize: 35,
+            symbolSize: 20,
             itemStyle: {
                 normal: {
                     color: function(params) {
@@ -578,25 +578,28 @@ option = {
         zoomLock:true
     }],
 
-    yAxis: {
-        axisLabel: {
-            show: false,
-            formatter: function(v) {
-                var _v = (v / _max * 100).toFixed(0);
-                return _v == 0 ? _v : _v + '%';
+     "yAxis": [{
+        "type": "value",
+        "splitLine": {
+            "show": false
+        },
+        "axisLine": {
+            lineStyle: {
+                color: '#fff'
             }
         },
-        axisLine: {
-            show: false
+        "axisTick": {
+            "show": false
         },
-        axisTick: {
-            show: false
-        },
-        splitLine: {
-            show: false
-        }
+        "axisLabel": {
+            "interval": 0,
 
-    },
+        },
+        "splitArea": {
+            "show": false
+        },
+
+    }],
     xAxis: [{
         data: y_data,
         axisLabel: {
@@ -605,7 +608,9 @@ option = {
 
         },
         axisLine: {
-            show: false
+             lineStyle: {
+                color: '#fff'
+            }
         },
         axisTick: {
             show: false
@@ -1105,8 +1110,7 @@ function chart5(data){
         itemStyle: {
             normal: {
                 color: function(params) {
-                    var colorList = ['#C1232B','#FCCE10','#E87C25','#60C0DD','#27727B',
-                           '#FE8463','#9BCA63','#FAD860','#F3A43B', '#D7504B'];
+                    var colorList = ['#eb2100', '#eb3600', '#d0570e', '#d0a00e', '#34da62', '#00e9db', '#00c0e9', '#0096f3', '#33CCFF', '#33FFCC'];
                     return colorList[params.dataIndex]
                 },
                 label: {
@@ -1206,7 +1210,8 @@ option = {
     "grid": {
         "borderWidth": 0,
         "top": 15,
-        "bottom": 95,
+        left: 50,
+        "bottom": 85,
         textStyle: {
             color: "#fff"
         }
@@ -1214,7 +1219,7 @@ option = {
     "legend": {
         x: '4%',
         top: 2,
-        left: 120,
+        left: 170,
         textStyle: {
             color: '#90979c',
         },
@@ -1273,7 +1278,7 @@ option = {
         "xAxisIndex": [
             0
         ],
-        bottom: 30,
+        bottom: 20,
         "start": 1,
         "end": 50,
         handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
@@ -1429,4 +1434,1261 @@ option = {
 }
      mychart.setOption(option);
  }
+
+(function(){$.ajax({
+        url: "/get_companyfinance",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart7").length>0){
+              chart7(data);
+            }
+        }
+    });
+})()
+ function chart7(mydata){
+    var mychart = echarts.init(document.getElementById("chart7"));
+    var data = mydata["series_data"];
+    var legendData = ['A轮', 'B轮', 'C轮','D轮及以上','上市公司','不需要融资','天使轮','未融资'];
+    var valuelist = [];
+    var templist = [];
+    function convertNamelist(data){
+        var res = [];
+        for(let i=0;i<data.length;i++){
+            res.push(data[i].name);
+        }
+        return res;
+    }
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value1);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value2);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value3);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value4);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value5);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value6);
+    }
+    valuelist.push(templist);
+    templist = [];
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value7);
+    }
+    valuelist.push(templist);
+    for(let j = 0;j < data.length;j++){
+          templist.push(data[j].value8);
+    }
+    valuelist.push(templist);
+//    var xData = function() {
+//    var data = [];
+//    for (var i = 1; i < 31; i++) {
+//        data.push(+i + "日");
+//    }
+//    return data;
+//}();
+
+option = {
+    backgroundColor: "transparent",
+
+    "tooltip": {
+        "trigger": "axis",
+        "axisPointer": {
+            "type": "shadow",
+            textStyle: {
+                color: "#fff"
+            }
+
+        },
+    },
+    "grid": {
+        "borderWidth": 0,
+        "top": 20,
+        "bottom": 95,
+        textStyle: {
+            color: "#fff"
+        }
+    },
+    "legend": {
+        x: '4%',
+        top: 2,
+        left: 100,
+        textStyle: {
+            color: '#90979c',
+        },
+        "data": legendData
+    },
+
+
+    "calculable": true,
+    "xAxis": [{
+        "type": "category",
+        "axisLine": {
+            lineStyle: {
+                color: '#fff'
+            }
+        },
+        "splitLine": {
+            "show": false
+        },
+        "axisTick": {
+            "show": false
+        },
+        "splitArea": {
+            "show": false
+        },
+        "axisLabel": {
+            "interval": 0,
+
+        },
+        "data": convertNamelist(data),
+    }],
+    "yAxis": [{
+        "type": "value",
+        "splitLine": {
+            "show": false
+        },
+        "axisLine": {
+            lineStyle: {
+                color: '#fff'
+            }
+        },
+        "axisTick": {
+            "show": false
+        },
+        "axisLabel": {
+            "interval": 0,
+
+        },
+        "splitArea": {
+            "show": false
+        },
+
+    }],
+    "dataZoom": [{
+        "show": true,
+        "height": 30,
+        "xAxisIndex": [
+            0
+        ],
+        bottom: 30,
+        "start": 1,
+        "end": 50,
+        handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
+        handleSize: '110%',
+        handleStyle: {
+            color: "#d3dee5",
+
+        },
+        textStyle: {
+            color: "#fff"
+        },
+        borderColor: "#90979c",
+        zoomLock:true
+
+
+    }, {
+        "type": "inside",
+        "show": true,
+        "height": 15,
+        "start": 1,
+        "end": 50,
+
+        disabled:true,
+        zoomLock:true
+    }],
+    series: [{
+            name: "A轮",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(255,185,15,1)",}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[0],
+        },
+        {
+            name: "B轮",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(255,144,128,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[1],
+        },
+        {
+            name: "C轮",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(0,191,183,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[2]
+        },
+        {
+            name: "D轮及以上",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(255,193,193,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[3]
+        },
+        {
+            name: "上市公司",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(255,106,106,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[4]
+        },
+        {
+            name: "不需要融资",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(58,95,205,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[5]
+        },
+        {
+            name: "天使轮",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "rgba(186,85,211,1)"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[6]
+        },{
+            name: "未融资",
+            type: "bar",
+            stack: '2',
+            legendHoverLink: false,
+            barWidth: 32,
+            itemStyle: {
+                normal: {
+                     color: "red"}
+                    },
+            label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+            "data": valuelist[7]
+        }
+    ]
+}
+     mychart.setOption(option);
+ }
+(function(){$.ajax({
+        url: "/get_companycount",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart8").length>0){
+              chart8(data);
+            }
+        }
+    });
+})()
+ function chart8(mydata){
+   mychart = echarts.init(document.getElementById("chart8"));
+   data = mydata["series_data"];
+   function convertNamelist(data){
+      var res = [];
+      for(let i = 0;i < data.length; i++){
+          res.push(data[i].name);
+      }
+      return res;
+   }
+   function convertValue1list(data){
+      var res = [];
+      for(let i = 0;i < data.length;i++){
+         res.push(data[i].value1);
+      }
+      return res;
+   }
+  option = {
+    "backgroundColor": "transparent",
+    "color": ["#3cefff"],
+    "tooltip": {},
+    "grid": {
+        "containLabel": true
+    },
+    "xAxis": [{
+        "type": "category",
+        "data": convertNamelist(data),
+        "axisTick": {
+            "alignWithLabel": true
+        },
+        "nameTextStyle": {
+            "color": "#82b0ec"
+        },
+        "axisLine": {
+            "lineStyle": {
+                "color": "#82b0ec"
+            }
+        },
+        "axisLabel": {
+            rotate: 40,
+            "textStyle": {
+                "color": "#82b0ec"
+            }
+        }
+    }],
+    "yAxis": [{
+        "type": "value",
+        "axisLabel": {
+            "textStyle": {
+                "color": "#82b0ec"
+            },
+            "formatter": "{value}"
+        },
+        "splitLine": {
+            "lineStyle": {
+                "color": "#0c2c5a"
+            }
+        },
+        "axisLine": {
+            "show": false
+        }
+    }],
+    "series": [{
+        "name": "",
+        "type": "pictorialBar",
+        "symbolSize": [20, 10],
+        "symbolOffset": [0, -5],
+        "symbolPosition": "end",
+        "z": 12,
+        "label": {
+            "normal": {
+                "show": true,
+                "position": "top",
+                "formatter": "{c}"
+            }
+        },
+        "data": convertValue1list(data)
+    }, {
+        "name": "",
+        "type": "pictorialBar",
+        "symbolSize": [20, 10],
+        "symbolOffset": [0, 5],
+        "z": 12,
+        "data": convertValue1list(data)
+    }, {
+        "type": "bar",
+        "itemStyle": {
+            "normal": {
+                "opacity": 0.7
+            }
+        },
+        "barWidth": "20",
+        "data":convertValue1list(data),
+        "markLine": {
+            "silent": true,
+            "symbol": "none",
+            "label": {
+                "position": "middle",
+                "formatter": "{b}"
+            },
+
+        }
+    }]
+}
+      mychart.setOption(option);
+ }
+
+(function(){$.ajax({
+        url: "/get_job",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart9").length>0){
+              chart9(data);
+            }
+        }
+    });
+})()
+function chart9(mydata){
+  var mychart = echarts.init(document.getElementById("chart9"));
+  var data = mydata["series_data"];
+  function convertNamelist(data){
+      var res = [];
+      for(let i = 0;i < data.length; i++){
+          res.push(data[i].name);
+      }
+      return res;
+   }
+   var datalist=[];
+   var templist=[];
+   var money = ['1-5k', '5-10k', '10-20k', '20k以上'];
+    var exp = convertNamelist(data);
+    for(let i=0;i<exp.length;i++){  //构造坐标数组
+        for(let j=0;j<money.length;j++){
+           templist.push(i);
+           templist.push(j);
+           if(j==0){
+           templist.push(data[i].value1)
+           }
+           else if(j==1){
+           templist.push(data[i].value2)
+           }
+           else if(j==2){
+           templist.push(data[i].value3)
+           }
+           else if(j==3){
+           templist.push(data[i].value4)
+           }
+           datalist.push(templist);
+           templist=[];
+        }
+    }
+    option = {
+        backgroundColor: "transparent",
+        tooltip: {},
+        visualMap: {
+            max:1500,
+            inRange: {
+                color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+            }
+        },
+        xAxis3D: {
+            name:"薪资",
+            type: 'category',
+            data: money
+        },
+        yAxis3D: {
+            name:"工作经验",
+            type: 'category',
+            data: exp
+        },
+        zAxis3D: {
+            name:"岗位数量",
+            type: 'value'
+        },
+        grid3D: {
+            boxWidth: 200,
+            boxDepth: 80,
+            axisLine: {
+            lineStyle: { color: '#fff' }
+        },
+        axisPointer: {
+            lineStyle: { color: '#fff' }
+        },
+        viewControl: {
+            // autoRotate: true
+        },
+        light: {
+            main: {
+                shadow: true,
+                quality: 'ultra',
+                intensity: 1.5
+            }
+        }
+        },
+        series: [{
+            type: 'bar3D',
+            data: datalist.map(function (item) {
+                return {
+                    value: [money[item[1]], exp[item[0]], item[2]],
+                }
+            }),
+            shading: 'lambert',
+
+            label: {
+                textStyle: {
+                    fontSize: 16,
+                    borderWidth: 1
+                }
+            },
+
+            emphasis: {
+                label: {
+                    textStyle: {
+                        fontSize: 20,
+                        color: '#900'
+                    }
+                },
+                itemStyle: {
+                    color: '#900'
+                }
+            }
+        }]
+    }
+    mychart.setOption(option);
+}
+(function(){$.ajax({
+        url: "/get_jobsalary",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart10").length>0){
+              chart10(data);
+            }
+        }
+    });
+})()
+function chart10(mydata){
+    var mychart = echarts.init(document.getElementById("chart10"));
+    var data = mydata["series_data"];
+    function convertNamelist(data){
+        var res = [];
+        for(let i = 0;i < data.length;i++){
+            res.push(data[i].name);
+        }
+        return res;
+     };
+     function convertValuelist(data){
+          var res = [];
+          for(let i = 0;i < data.length;i++){
+            res.push(data[i].value);
+          }
+          return res;
+     };
+
+    option = {
+    backgroundColor: 'transparent',
+    grid: {
+        top: '20%',
+        right: '3%',
+        left: '5%',
+        bottom: '16%'
+    },
+    xAxis: [{
+        type: 'category',
+        color: '#59588D',
+        data: convertNamelist(data),
+        axisPointer: {
+            type: 'line'
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#272456'
+            }
+        },
+        axisLabel: {
+            margin: 20,
+            color: '#fff',
+            rotate: 40,
+            textStyle: {
+                fontSize: 13
+            },
+        },
+    }],
+    yAxis: [
+
+    {
+        axisLabel: {
+            formatter: '{value}',
+            color: '#fff',
+        },
+
+        axisLine: {
+            show: true,
+        },
+        splitLine: {
+            lineStyle: {
+                color: '#272456'
+            }
+        }
+    }],
+    series: [{
+        type: 'bar',
+        data: convertValuelist(data),
+        barWidth: '20px',
+        itemStyle: {
+            normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#41E1D4' // 0% 处的颜色
+                }, {
+                    offset: 1,
+                    color: '#10A7DB' // 100% 处的颜色
+                }], false),
+                barBorderRadius: [30, 30, 0, 0],
+                shadowColor: 'rgba(0,255,225,1)',
+                shadowBlur: 4,
+            }
+        },
+        label: {
+            normal: {
+                show: true,
+                lineHeight: 30,
+                width: 80,
+                height: 30,
+                backgroundColor: '#252453',
+                borderRadius: 200,
+                position: ['-8', '-60'],
+                distance: 1,
+                formatter: [
+                    '    {d|●}',
+                    ' {a|{c}}     \n',
+                    '    {b|}'
+                ].join(','),
+                rich: {
+                    d: {
+                        color: '#3CDDCF',
+                    },
+                    a: {
+                        color: '#fff',
+                        align: 'center',
+                    },
+                    b: {
+                        width: 1,
+                        height: 30,
+                        borderWidth: 1,
+                        borderColor: '#234e6c',
+                        align: 'left'
+                    },
+                }
+            }
+        }
+    }]
+};
+   mychart.setOption(option);
+}
+(function(){$.ajax({
+        url: "/get_jobsalary",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart11").length>0){
+              chart11(data);
+            }
+        }
+    });
+})()
+function chart11(mydata){
+    var mychart = echarts.init(document.getElementById("chart11"));
+    var data = mydata["series_data"];
+var xData = [],
+    yData = [];
+var min = 50;
+data.map(function(a, b) {
+    xData.push(a.name);
+    if (a.value === 0) {
+        yData.push(a.value + min);
+    } else {
+        yData.push(a.value);
+    }
+});
+option = {
+    backgroundColor:"transparent",
+    color: ['#3398DB'],
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'line',
+            lineStyle: {
+                opacity: 0
+            }
+        },
+        formatter: function(prams) {
+            if (prams[0].data === min) {
+                return "平均薪资：0%"
+            } else {
+                return "平均薪资：" + prams[0].data
+            }
+        }
+    },
+    legend: {
+        data: ['直接访问', '背景'],
+        show: false
+    },
+    grid: {
+        left: '6%',
+        right: '0%',
+        bottom: '5%',
+        top: '10%',
+        height: '85%',
+        containLabel: true,
+        z: 22
+    },
+    xAxis: [{
+        type: 'category',
+        gridIndex: 0,
+        data: xData,
+        axisTick: {
+            alignWithLabel: true
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#0c3b71'
+            }
+        },
+        axisLabel: {
+             rotate:40,
+             show: true,
+             color: 'rgb(170,170,170)',
+             fontSize:16
+        }
+    }],
+    yAxis: [{
+            type: 'value',
+            gridIndex: 0,
+            splitLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#0c3b71'
+                }
+            },
+            axisLabel: {
+                color: 'rgb(170,170,170)',
+                formatter: '{value}'
+            }
+        },
+        {
+            type: 'value',
+            gridIndex: 0,
+            min: min,
+            max: 100,
+            splitNumber: 12,
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                show: false
+            },
+            splitArea: {
+                show: true,
+                areaStyle: {
+                    color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
+                }
+            }
+        }
+    ],
+    series: [{
+            name: '平均薪资',
+            type: 'bar',
+            barWidth: '30%',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            itemStyle: {
+                normal: {
+                    barBorderRadius: 30,
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#00feff'
+                            },
+                            {
+                                offset: 0.5,
+                                color: '#027eff'
+                            },
+                            {
+                                offset: 1,
+                                color: '#0286ff'
+                            }
+                        ]
+                    )
+                }
+            },
+            data: yData,
+            zlevel: 11
+
+        },
+        {
+            name: '背景',
+            type: 'bar',
+            barWidth: '50%',
+            xAxisIndex: 0,
+            yAxisIndex: 1,
+            barGap: '-135%',
+            data: [100, 100, 100, 100, 100, 100,100,100,100,100,100],
+            itemStyle: {
+                normal: {
+                    color: 'rgba(255,255,255,0.1)'
+                }
+            },
+            zlevel: 9
+        },
+
+    ]
+};
+
+  mychart.setOption(option);
+}
+(function(){$.ajax({
+        url: "/get_bigcompanycount",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+           //alert(JSON.stringify(data));
+           if($("#chart12").length>0){
+              chart12(data);
+            }
+        }
+    });
+})()
+function chart12(mydata){
+    var mychart = echarts.init(document.getElementById("chart12"));
+    var ydata = mydata["series_data"];
+    function convertNamelist(data){
+        var res = [];
+        for(let i = 0;i < data.length;i++){
+            res.push(data[i].name);
+        }
+        return res;
+     }
+var color = ["#8d7fec", "#5085f2","#e75fc3","#f87be2","#f2719a","#fca4bb","#f59a8f","#fdb301","#57e7ec","#cf9ef1"]
+var xdata = convertNamelist(ydata);
+
+
+option = {
+     backgroundColor: "transparent",
+    color:color,
+    legend: {
+        orient: "vartical",
+        x: "left",
+        top: "center",
+        left: "70%",
+        bottom: "0%",
+        data: xdata,
+        textStyle: {
+            color: '#fff',
+        },
+        itemWidth: 8,
+        itemHeight: 8,
+        itemGap :16,
+	    /*formatter:function(name){
+	      var oa = option.series[0].data;
+	      var num = oa[0].value + oa[1].value + oa[2].value + oa[3].value+oa[4].value + oa[5].value + oa[6].value + oa[7].value+oa[8].value + oa[9].value ;
+	      for(var i = 0; i < option.series[0].data.length; i++){
+              if(name==oa[i].name){
+              	return ' '+name + '    |    ' + oa[i].value + '    |    ' + (oa[i].value/num * 100).toFixed(2) + '%';
+              }
+	      }
+	    }*/
+
+        formatter :function(name){
+            return ''+name
+          }
+    },
+    series: [{
+        type: 'pie',
+        clockwise: false, //饼图的扇区是否是顺时针排布
+        minAngle: 2, //最小的扇区角度（0 ~ 360）
+        radius: ["40%", "70%"],
+        center: ["40%", "50%"],
+        avoidLabelOverlap: false,
+         itemStyle: { //图形样式
+            normal: {
+                borderColor: '#ffffff',
+                borderWidth: 6,
+            },
+        },
+        label: {
+            normal: {
+                show: false,
+                position: 'center',
+                formatter: '{text|{b}}\n{c} ({d}%)',
+                rich: {
+                    text: {
+                        color: "#fff",
+                        fontSize: 14,
+                        align: 'center',
+                        verticalAlign: 'middle',
+                        padding: 8
+                    },
+                    value: {
+                        color: "#8693F3",
+                        fontSize: 24,
+                        align: 'center',
+                        verticalAlign: 'middle',
+                    },
+                }
+            },
+            emphasis: {
+                show: true,
+                textStyle: {
+                    fontSize: 24,
+                }
+            }
+        },
+        data: ydata
+    }]
+};
+mychart.setOption(option);
+
+setTimeout(function() {
+    mychart.on('mouseover', function(params) {
+        if (params.name == ydata[0].name) {
+            mychart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: 0
+            });
+        } else {
+            mychart.dispatchAction({
+                type: 'downplay',
+                seriesIndex: 0,
+                dataIndex: 0
+            });
+        }
+    });
+
+    mychart.on('mouseout', function(params) {
+        mychart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: 0
+        });
+    });
+    mychart.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: 0
+    });
+}, 1000);
+}
+
+
+
+function chart13(){
+    var mychart = echarts.init(document.getElementById("chart13"))
+    option = {
+        tooltip: {
+            show: true
+        },
+        series: [{
+            name: 'Google Trends',
+            type: 'wordCloud',
+            size: ['100%', '100%'],
+            textRotation : [0, 45, 90, -45],
+            textPadding: 0,
+            autoSize: {
+                enable: true,
+            },
+             textStyle: {
+            normal: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                // Color can be a callback function or a color string
+                color: function () {
+                    // Random color
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                    ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+            data: [
+                {
+                    name: "五险一金",
+                    value: 10000,
+                },
+                {
+                    name: "绩效奖金",
+                    value: 6181,
+                },
+                {
+                    name: "员工旅游",
+                    value: 4386,
+                },
+                {
+                    name: "年终奖金",
+                    value: 4055,
+                },
+                {
+                    name: "专业培训",
+                    value: 2467,
+                },
+                {
+                    name: "餐饮补贴",
+                    value: 2244,
+                },
+                {
+                    name: "带薪年假",
+                    value: 1898,
+                },
+                {
+                    name: "交通补贴",
+                    value: 1484,
+                },
+                {
+                    name: "节日福利",
+                    value: 1112
+                },
+                {
+                    name: "通讯补贴",
+                    value: 965
+                },
+                {
+                    name: "弹性工作",
+                    value: 847
+                },
+                {
+                    name: "周末双休",
+                    value: 582
+                },
+                {
+                    name: "定期体检",
+                    value: 555
+                },
+                {
+                    name: "全勤奖",
+                    value: 550
+                },
+                {
+                    name: "补充医疗保险",
+                    value: 462
+                },
+                {
+                    name: "包住宿",
+                    value: 366
+                },
+                {
+                    name: "做五休二",
+                    value: 360
+                },
+                {
+                    name: "免费班车",
+                    value: 282
+                },
+                {
+                    name: "包吃",
+                    value: 273
+                },
+                {
+                    name: "出国机会",
+                    value: 265
+                },
+                 {
+                    name: "股票期权",
+                    value: 250
+                },
+                {
+                    name: "补充公积金",
+                    value: 235
+                },
+                {
+                    name: "加班、住房、高温补贴",
+                    value: 210
+                }
+            ]
+        }]};
+         mychart.setOption(option);
+    }
+
+if($("#chart13").length>0){
+    chart13();
+}
+
+(function(){$.ajax({
+        url: "/get_industryinfo",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+//        alert(JSON.stringify(data["series_data"][0].name.substring(4)));
+           if($("#table2-box").length>0){
+              ranking_box(data);
+            }
+        }
+    });
+})()
+function ranking_box(mydata){
+    data = mydata["series_data"];
+     //添加第一行标题
+    $("#table2-box").append("<li></li>");
+    var namelist = ["行业","主要城市","平均公司规模","平均薪资"]
+    for(let i = 0;i < namelist.length;i++){
+        $("#table2-box").find("li").eq(0).append("<p>"+namelist[i]+"</p>");
+    }
+    //添加列表信息
+    for(let i = 0;i < data.length;i++){
+        $("#table2-box").append("<li></li>");
+        $("#table2-box").find("li").eq(i+1).append("<p>"+data[i].job+"</p");
+        $("#table2-box").find("li").eq(i+1).append("<p>"+data[i].country+"</p");
+        $("#table2-box").find("li").eq(i+1).append("<p>"+data[i].scale+"</p");
+        $("#table2-box").find("li").eq(i+1).append("<p>"+data[i].salary+"</p");
+    }
+}
+
+(function(){$.ajax({
+        url: "/get_expsalary",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+//        alert(JSON.stringify(data["series_data"][0].name.substring(4)));
+           if($("#table-box").length>0){
+             $("#myselect").change(function(){
+             //薪水排名
+             if($(this).children("option:selected").val()=="salary"){
+                $("#table-box li").remove();
+                table_box(data["series_data"].sort(function(a,b){
+                  return b.salaryExpect-a.salaryExpect;
+              }));
+             }
+             //经验排名
+             if($(this).children("option:selected").val()=="exp"){
+                $("#table-box li").remove();
+                table_box(data["series_data"].sort(function(a,b){
+                  var patt = /^[0-9]/;
+                  if(!patt.test(b.exp)){  //正则判断首字母是否为数字
+                      b.exp="0"+b.exp;
+                  }
+                  if(!patt.test(a.exp)){
+                      a.exp="0"+a.exp;
+                  }
+                  return parseFloat(b.exp)-parseFloat(a.exp);
+              }));
+             }
+             //学历排名
+             if($(this).children("option:selected").val()=="edu"){
+                $("#table-box li").remove();
+                table_box(data["series_data"].sort(function(a,b){
+                  var edulist=["大专","本科","硕士","博士"];
+                  if(edulist.indexOf(a.edu)>-1){
+                      a.edu=edulist.indexOf(a.edu);
+                  }
+                  if(edulist.indexOf(b.edu)>-1){
+                      b.edu=edulist.indexOf(b.edu);
+                  }
+                  return b.edu-a.edu;
+              }));
+             }
+         })
+             //默认经验排名
+             table_box(data["series_data"].sort(function(a,b){
+                  var patt = /^[0-9]/;
+                  if(!patt.test(b.exp)){  //判断首字母是否为数字
+                      b.exp="0"+b.exp;
+                  }
+                  if(!patt.test(a.exp)){
+                      a.exp="0"+a.exp;
+                  }
+                  return parseFloat(b.exp)-parseFloat(a.exp);
+              }));
+            }
+        }
+    });
+})()
+function table_box(data){
+     //添加第一行标题
+    $("#table-box").append("<li></li>");
+    var namelist = ["经验要求","学历","期望薪水(千)"]
+    for(let i = 0;i < namelist.length;i++){
+        $("#table-box").find("li").eq(0).append("<p>"+namelist[i]+"</p>");
+    }
+    //添加列表信息
+    for(let i = 0;i < data.length;i++){
+        if(data[i].exp.substring(0,1)=="0"){
+            data[i].exp=data[i].exp.substring(1); //将首字符0去掉
+        }
+        var edulist=["大专","本科","硕士","博士"];
+        var index = data[i].edu;
+        if(/[0-3]/.test(index)){
+            data[i].edu=edulist[index];//将学历的值复原
+        }
+
+        $("#table-box").append("<li></li>");
+        $("#table-box").find("li").eq(i+1).append("<p>"+data[i].exp+"</p");
+        $("#table-box").find("li").eq(i+1).append("<p>"+data[i].edu+"</p");
+        $("#table-box").find("li").eq(i+1).append("<p>"+data[i].salaryExpect.toFixed(3)+"</p");
+    }
+
+}
 

@@ -22,6 +22,8 @@ def company():
 @app.route("/job")
 def job():
     return render_template("job.html")
-
+@app.route("/tab")
+def tab():
+    return render_template("tab.html")
 if __name__ == '__main__':
     app.run()

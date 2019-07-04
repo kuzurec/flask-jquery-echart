@@ -26,6 +26,9 @@
                 <li>
                     <a href="job">岗位</a>
                 </li>
+                <li>
+                    <a href="tab">求职标签面板</a>
+                </li>
             </ul>
         </nav>
         <div class="center-top">
@@ -37,15 +40,50 @@
             <ul>
                 <li>融资情况</li>
                 <li>行业聚类</li>
-                <li>地域分布</li>
+                <li>大公司数量</li>
             </ul>
         </div>
         <div class="mybox">
             <div class="chart-box">
-                <div id="chart5" style="width:100%;height:100%;"></div>
+                <div class="wrapper">
+                    <section style="width: 75%;height: 85%">
+                        <div class="boxall" style="height: 100%">
+                            <div class="alltitle">公司融资情况</div>
+                                 <div id="chart7" style="width:850px;height:400px;"></div>
+                            <div class="boxfoot"></div>
+                        </div>
+                    </section>
+                </div>
             </div>
             <div class="chart-box ">
-                <div id="chart4" style="width:100%;height:100%;"></div>
+                 <div class="wrapper">
+                    <section style="width: 75%;height: 85%">
+                        <div class="boxall" style="height: 100%">
+                            <div class="alltitle">行业聚类</div>
+                                 <ul id="table2-box" class="ranking-box">
+                                 </ul>
+                            <div class="boxfoot"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="chart-box">
+                <div class="wrapper">
+                    <section style="width: 45%;height: 85%">
+                        <div class="boxall" style="height: 100%">
+                            <div class="alltitle">各行业公司数量</div>
+                                 <div id="chart8" style="width:500px;height:380px;"></div>
+                            <div class="boxfoot"></div>
+                        </div>
+                    </section>
+                    <section style="width: 45%;height: 85%;margin-left:10px">
+                        <div class="boxall" style="height: 100%">
+                            <div class="alltitle">各行业大公司数量</div>
+                                 <div id="chart12" style="width:500px;height:380px;"></div>
+                            <div class="boxfoot"></div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
@@ -62,19 +100,19 @@
             $(".mybox").find(".chart-box").eq(i).hide();
         }
         $(".switch-box ul li:eq(0)").css("border-bottom","3px solid #142132"); //更改底部样式
-        $(".switch-box ul li:eq(0)").css("border-top","2px solid #0E94EA");
+        $(".switch-box ul li:eq(0)").css("border-top","2px solid #2A60A9");
         $(".mybox").find(".chart-box").eq(0).show(); //默认第一个显示
         for(let i=0;i<$(".switch-box ul li").length;i++){
             $(".switch-box ul").find("li").eq(i).on("click",function(){  //点击事件
              for(let j=0;j<$(".switch-box ul li").length;j++){
-                 $(".mybox").find(".chart-box").eq(j).hide();
+                 $(".mybox").find(".chart-box").eq(j).fadeOut();
                  $(".switch-box ul").find("li").eq(j).css("border-bottom","");
                  $(".switch-box ul").find("li").eq(j).css("border-top","");
 
              };
-            $(".mybox").find(".chart-box").eq(i).show();
+            $(".mybox").find(".chart-box").eq(i).fadeIn();
              $(".switch-box ul").find("li").eq(i).css("border-bottom","3px solid #142132");
-             $(".switch-box ul").find("li").eq(i).css("border-top","2px solid #0E94EA");
+             $(".switch-box ul").find("li").eq(i).css("border-top","2px solid #2A60A9");
      })
     }
  });

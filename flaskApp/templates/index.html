@@ -8,8 +8,36 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 
     <script type="text/javascript" src="../static/js/rem.js"></script>
+    <script type="text/javascript" src="../static/js/tagcanvas.min.js"></script>
     <link rel="stylesheet" href="../static/css/style.css">
     <title>互联网大数据分析-首页</title>
+    <script type="text/javascript">
+    window.onload = function () {
+	try {
+		var i, et = document.getElementById('tags').childNodes;
+		for (i in et) {
+			et[i].nodeName == 'A' && et[i].addEventListener('mouseover', function (e) {
+				e.preventDefault();
+				alert("干哈");
+			});
+		}
+
+		TagCanvas.Start('myCanvas', 'tags', {
+			textColour: '#88F9EF',
+			outlineColour: 'red',
+			reverse: true,
+			depth: 0.8,
+			dragControl: true,
+			decel:0.95,
+			maxSpeed: 0.02,
+			initial: [-0.2, 0]
+		});
+	} catch (e) {
+		// something went wrong, hide the canvas container
+		//document.getElementById('myCanvasContainer').style.display = 'none';
+	}
+};
+</script>
 </head>
 
 <body style="visibility: hidden; overflow: hidden;">
@@ -28,6 +56,9 @@
                 <li>
                     <a href="job">岗位</a>
                 </li>
+                <li>
+                    <a href="tab">求职标签面板</a>
+                </li>
             </ul>
         </nav>
         <div class="center-top">
@@ -36,20 +67,62 @@
     </header>
     <div class="container-flex" tabindex="0" hidefocus="true">
         <div class="box-left">
-            <div class="left-top">
+            <div class="left-top" >
                 <div class="boxall" style="height: 100%">
-                     <div class="alltitle">人才需求最大的公司Top10</div>
-                    <div class="chart-box"> 
-                         <!--<div id="chart2" style="width:100%;height:100%;"></div>-->
-                    </div>
+                     <div class="alltitle">年度热词</div>
+                     <div class="chart-box" style="top:35px">
+                         <div style="text-align: center">
+                         <canvas width="240px" height="240px" id="myCanvas" style=""></canvas>
+                         <div id="tags" style="display: none;">
+                            <a href="https://mq.51job.com/co2758227/" target="_blank">今日头条</a>
+                            <a href="https://mq.51job.com/co2381155/" target="_blank">美团点评</a>
+                            <a href="https://mq.51job.com/co1991749/" target="_blank">阿里巴巴</a>
+                            <a href="https://mq.51job.com/co123056/" target="_blank">腾讯</a>
+                            <a href="https://mq.51job.com/co3846654/" target="_blank">京东</a>
+                            <a href="https://mq.51job.com/co755250/" target="_blank">携程</a>
+                            <a href="https://mq.51job.com/co2821227/" target="_blank">滴滴</a>
+                            <a href="https://mq.51job.com/co1249/" target="_blank">前程无忧</a>
+                            <a href="https://mq.51job.com/co1461258/" target="_blank">新浪</a>
+                            <a href="https://mq.51job.com/co112266/" target="_blank">百度</a>
+                            <a href="https://mq.51job.com/co100647/" target="_blank">亚马逊</a>
+                            <a href="https://mq.51job.com/co2712166/" target="_blank">陆金所</a>
+                            <a href="https://mq.51job.com/co2487144/" target="_blank">饿了么</a>
+                            <a href="https://mq.51job.com/co2790549/" target="_blank">唯品会</a>
+                            <a href="hhttps://mq.51job.com/co804886/" target="_blank">360</a>
+                            <a href="https://mq.51job.com/co2215669/" target="_blank">完美世界</a>
+                            <a href="https://mq.51job.com/co2376239/" target="_blank">爱奇艺</a>
+                            <a href="https://mq.51job.com/co1527376/" target="_blank">同程艺龙</a>
+                            <a href="https://mq.51job.com/co2274026/" target="_blank">搜狐</a>
+                            <a href="https://mq.51job.com/co2365227/" target="_blank">喜马拉雅</a>
+                            <a href="https://mq.51job.com/co3380291/" target="_blank">斗鱼</a>
+                            <a href="https://mq.51job.com/co4831425/" target="_blank">拼多多</a>
+                            <a href="https://mq.51job.com/co2570197/" target="_blank">去哪儿网</a>
+                            <a href="https://mq.51job.com/co315713/" target="_blank">科大讯飞</a>
+                            <a href="https://mq.51job.com/co2636550/" target="_blank">陌陌</a>
+                            <a href="https://mq.51job.com/co5011133/" target="_blank">优酷</a>
+
+                            <a href="https://mq.51job.com/co3155133/" target="_blank">哔哩哔哩</a>
+                            <a href="https://mq.51job.com/co3818844/" target="_blank">瓜子二手车</a>
+                            <a href="https://mq.51job.com/co2186415/" target="_blank">虎扑</a>
+                            <a href="https://mq.51job.com/co2667203/" target="_blank">人民网</a>
+                            <a href="https://mq.51job.com/co4927362/" target="_blank">快手</a>
+                            <a href="https://mq.51job.com/co3266535/" target="_blank">小红书</a>
+                            <a href="https://mq.51job.com/co2504825/" target="_blank">Booking</a>
+                            <a href="https://mq.51job.com/co2384996/" target="_blank">凤凰网</a>
+                            <a href="https://mq.51job.com/co3139009/" target="_blank">第一财经</a>
+                            <a href="https://mq.51job.com/co2286609/" target="_blank">UC优视</a>
+                            <a href="https://mq.51job.com/co2580707/" target="_blank">华数传媒</a>
+                          </div>
+                         </div>
+                     </div>
                     <div class="boxfoot"></div>
                 </div>
             </div>
-            <div class="left-bottom" class="select">
+            <div class="left-bottom">
                 <div class="boxall" style="height: 100%">
-                     <div class="alltitle">年度热词</div>
-                    <div class="chart-box"> 
-                         <!--<div id="chart5" style="width:100%;height:100%;"></div>-->
+                     <div class="alltitle">全国各城市岗位需求排名Top10</div>
+                    <div class="chart-box">
+                         <div id="chart2" style="width:100%;height:90%;margin-top:10%"></div>
                     </div>
                     <div class="boxfoot"></div>
                 </div>
@@ -78,7 +151,7 @@
                 </div> -->
                 <!-- <img src="mySVG.svg" class="mysvg" alt="" /> -->
                 <div class="chart-box">
-                    <div id="chart4" style="width:100%px;height:100%;"></div>
+                    <div id="chart4" style="width:100%;height:100%"></div>
                 </div>
                 
             </div>
@@ -87,18 +160,18 @@
         <div class="box-right">
             <div class="right-top">
                 <div class="boxall" style="height: 100%">
-                     <div class="alltitle">人才需求最大的公司Top10</div>
+                     <div class="alltitle">高频福利</div>
                     <div class="chart-box"> 
-                         <!--<div id="chart5" style="width:100%;height:100%;"></div>-->
+                         <div id="chart13" style="width:100%;height:90%;margin-top:10%"></div>
                     </div>
                     <div class="boxfoot"></div>
                 </div>
             </div>
             <div class="right-bottom">
                 <div class="boxall" style="height: 100%">
-                     <div class="alltitle">人才需求最大的公司Top10</div>
+                     <div class="alltitle">各行业大公司数量</div>
                     <div class="chart-box"> 
-                         <!--<div id="chart5" style="width:100%;height:100%;"></div>-->
+                         <div id="chart12" style="width:100%;height:90%;margin-top:10%"></div>
                     </div>
                     <div class="boxfoot"></div>
                 </div>
@@ -110,11 +183,13 @@
 <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../static/js/echarts.min.js"></script>
 <script type="text/javascript" src="../static/js/china.js"></script>
+<script type="text/javascript" src="../static/js/echarts-wordcloud.min.js"></script>
 <script type="text/javascript" src="../static/js/base.js"></script>
 <script type="text/javascript">
     $('document').ready(function () {
         $("body").css('visibility', 'visible');
        })
+
 </script>
 
 
