@@ -99,6 +99,11 @@ class Regression(db.Model):
     exp = db.Column(db.String(20), primary_key=True) #经验要求
     edu = db.Column(db.String(20), primary_key=True) #学历
     salaryExpect = db.Column(db.FLOAT) #期望薪水
+#一级大类职位占比
+class Position(db.Model):
+    __tablename__ = "position"
+    name = db.Column(db.String(20), primary_key=True)  # 大类
+    value = db.Column(db.String(20), primary_key=True)  # 人数
 
 #用户信息
 class User(db.Model):

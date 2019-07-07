@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, render_template,request,session
 
 from config import db
-from models.model import CitySalary,CityPeople,CityScale,ExperienceCity,CompanyFinance,CompanyCount,Experience,JobSalary,LanguageSalary,Industryinfo,Regression,User,Attention
+from models.model import CitySalary,CityPeople,CityScale,ExperienceCity,CompanyFinance,CompanyCount,Experience,JobSalary,LanguageSalary,Industryinfo,Regression,User,Attention,Position
 import random
 analysis = Blueprint('webaccess', __name__)
 
@@ -206,6 +206,22 @@ def get_language():
 
     return json.dumps(view_data, ensure_ascii=False)
 
+@analysis.route('/get_position')
+def get_position():
+    data = db.session.query(Position).all()
+    view_data = {}
+    view_data["series_data"] = []
+
+    def build_view_data(item):
+        tmp_dic = {}
+        tmp_dic["name"] = item.name
+        tmp_dic["value"] = item.value
+        view_data["series_data"].append(tmp_dic)
+
+    [build_view_data(item) for item in data]
+
+    return json.dumps(view_data, ensure_ascii=False)
+
 @analysis.route('/get_industryinfo')
 def get_industryinfo():
     data = db.session.query(Industryinfo).all()
@@ -306,7 +322,6 @@ def get_tuijian():
             uname_dic[uname] = uname_dic[uname]+1
         #对字典排序
         slist = sorted(uname_dic.items(), key=lambda x: x[1],reverse=True)
-        first = slist[0][1] #列表中第一个元组是当前登录用户或者关注完全相同的用户
         result_list=[]
         for i in range(len(slist)):
             same_user = db.session.query(Attention).filter(Attention.username == slist[i][0]).all()
