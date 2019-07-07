@@ -7,15 +7,17 @@
            if($("#chart1").length>0){   //如果存在#chart1
               chart1(data);
             }
+            if($("#chart1s").length>0){   //如果存在#chart1
+              chart1s(data);
+            }
+
             if($("#chart2").length>0){
               chart2(data);
             }
         }
     });
 })()
-function chart1(mydata){
-   mychart = echarts.init(document.getElementById("chart1"));
-   var data = mydata["series_data"];
+
 var geoCoordMap = {
     '海门':[121.15,31.89],
     '鄂尔多斯':[109.781327,39.608266],
@@ -209,6 +211,9 @@ var geoCoordMap = {
     '大庆':[125.03,46.58]
 };
 
+function chart1(mydata){
+   mychart = echarts.init(document.getElementById("chart1"));
+   var data = mydata["series_data"];
 
 var convertData = function(data) {
     var res = [];
@@ -237,6 +242,106 @@ option = {
             {gt: 100, lte: 500},
             {gt: 0, lte: 100}
         ],
+        inRange: {
+            color:  ['red','#eac736','#50a3ba'].reverse(),
+            opacity: 0.8,
+            symbolSize: [5, 40],
+        },
+        textStyle: {
+            color: '#fff'
+        }
+    },
+     tooltip: {
+            trigger: 'item'
+         },
+    geo: {
+        show: true,
+        map: 'china',
+        label: {
+            normal: {
+                show: false
+            },
+            emphasis: {
+                show: false
+            }
+        },
+        roam: true,
+        itemStyle: {
+             normal: {
+                    areaColor: 'transparent',
+                    borderWidth: 1.2,
+                     //shadowColor: 'rgba(128, 217, 248, 1)',
+                    // shadowColor: 'rgba(255, 255, 255, 1)',
+                    shadowOffsetX: -2,
+                    shadowOffsetY: 2,
+                    shadowBlur: 10,
+                    borderColor: '#0E94EA',
+                    shadowBlur: 10,
+                    shadowColor: '#0e94ea'
+                },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    series: [{
+            name: '岗位数量',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            data: convertData(data),
+            encode: {
+                value: 2
+            },
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#fff'
+                }
+            }
+        }
+    ]
+};
+  mychart.setOption(option);
+}
+
+function chart1s(mydata){
+   mychart = echarts.init(document.getElementById("chart1s"));
+   var data = mydata["series_data"];
+
+var convertData = function(data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name.substring(4)];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name.substring(4),
+                value: geoCoord.concat(data[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+option = {
+    visualMap: {
+        type: "piecewise",
+        min: 0,
+        max: convertData(data).sort(function(a,b){return b.value-a.value})[0].value,
+        pieces: [
+            {gt: 50000},
+            {gt: 10000, lte: 50000},
+            {gt: 5000, lte: 10000},
+            {gt: 500, lte: 5000},
+            {gt: 100, lte: 500},
+            {gt: 0, lte: 100}
+        ],
+        show:false,
         inRange: {
             color:  ['red','#eac736','#50a3ba'].reverse(),
             opacity: 0.8,
@@ -342,7 +447,7 @@ option = {
         axisLabel: {
             textStyle: {
                 color: '#ffffff',
-                fontSize: '16',
+                fontSize: '12',
             }
         },
         data:convertNamelist(mydata.sort(function(a,b){
@@ -353,7 +458,7 @@ option = {
         axisLabel: {
             textStyle: {
                 color: 'transparent',
-                fontSize: '16',
+                fontSize: '12',
             }
         },
         data: ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
@@ -378,7 +483,7 @@ option = {
                     position: 'right',
                     textStyle: {
                         color: '#ffffff',
-                        fontSize: '16',
+                        fontSize: '12',
                     }
                 }
             },
@@ -958,7 +1063,7 @@ var option = {
                 show: false
             }
         },
-        roam: false,
+        roam: true,
         itemStyle: {
              normal: {
                     areaColor: 'transparent',
@@ -2133,7 +2238,7 @@ function chart10(mydata){
    mychart.setOption(option);
 }
 (function(){$.ajax({
-        url: "/get_jobsalary",
+        url: "/get_language",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -2281,7 +2386,7 @@ option = {
                 }
             },
             data: yData,
-            zlevel: 11
+            zlevel: 16
 
         },
         {
@@ -2291,7 +2396,7 @@ option = {
             xAxisIndex: 0,
             yAxisIndex: 1,
             barGap: '-135%',
-            data: [100, 100, 100, 100, 100, 100,100,100,100,100,100],
+            data: [100, 100, 100, 100, 100, 100,100,100,100,100,100,100,100,100,100,100],
             itemStyle: {
                 normal: {
                     color: 'rgba(255,255,255,0.1)'
@@ -2464,9 +2569,9 @@ function chart13(){
                 color: function () {
                     // Random color
                     return 'rgb(' + [
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160)
+                        Math.round(Math.random() * 255),
+                        Math.round(Math.random() * 255),
+                        Math.round(Math.random() * 255)
                     ].join(',') + ')';
                 }
             },
@@ -2691,4 +2796,105 @@ function table_box(data){
     }
 
 }
+////关注功能
+$(function(){
+    $.ajax({
+        url:"/get_attention",
+        type:"GET",
+        dataType:"json",
+        success:function(data){
+             var mydata = data["series_data"];
+             //将标题添加到我的关注里面
+             if($(".mycontainer .attention-box").find(".attention-list").length>0){
+                 for(let i=0;i<mydata.length;i++){
+                 $(".mycontainer .attention-box").find(".attention-list").append("<li>"+mydata[i].topicname+"</li>")
+             }
+             }
+             var topiclist=[];
+             for(let i=0;i<mydata.length;i++){
+                 topiclist.push(mydata[i].topicname);
+             }
+             for(let i=0;i<$(".alltitle").length;i++){
+                 $(".alltitle").eq(i).append("<button id='cancel'>取关</button><button id='att'>关注</button>");
+                 var len = $(".alltitle").eq(i).text().length;
+                 if(topiclist.indexOf($(".alltitle").eq(i).text().substring(0,len-4))>-1){
+                     $(".alltitle").eq(i).find("#att").hide();
+                     $(".alltitle").eq(i).find("#cancel").show();
+                 }
+                 else{
+                     $(".alltitle").eq(i).find("#cancel").hide();
+                     $(".alltitle").eq(i).find("#att").show();
+                 }
+                 attention($(".alltitle"),i,len);
+                 cancel_attention($(".alltitle"),i,len)
+             }
+              tuijian();
 
+    }
+
+})
+})
+
+function attention(title,i,len){
+       title.eq(i).find("#att").click(function(){
+               var data = {"topicname":$(this).parent().text().substring(0,len-4)}
+               var _this = this;
+               $.ajax({
+                    url: "/post_attention",
+                    type: "POST",
+                    data:JSON.stringify(data),
+                    contentType:"application/json;Charset=UTF-8",
+                    success: function (data) {
+                        if(data=="ok"){
+                            alert("关注成功");
+                            $(_this).hide();
+                            $(_this).parent().find("#cancel").show();
+                        }
+                        else{
+                            alert("关注失败");
+                        }
+                    }
+                });
+        })
+}
+
+function cancel_attention(title,i,len){
+       title.eq(i).find("#cancel").click(function(){
+               var data = {"topicname":$(this).parent().text().substring(0,len-4)}
+               var _this = this;
+               $.ajax({
+                    url: "/post_cancel",
+                    type: "POST",
+                    data:JSON.stringify(data),
+                    contentType:"application/json;Charset=UTF-8",
+                    success: function (data) {
+                        if(data=="ok"){
+                            alert("取消成功");
+                            $(_this).hide();
+                            $(_this).parent().find("#att").show();
+                        }
+                        else{
+                            alert("取消失败");
+                        }
+                    }
+                });
+        })
+}
+
+
+function tuijian(){
+    $.ajax({
+        url: "/get_tuijian",
+        type: "GET",
+        dataType:"json",
+        success: function (data) {
+             var mydata = data["series_data"];
+             //将推荐添加到相关推荐里面
+             if($(".mycontainer .tuijian-box").find(".tuijian-list").length>0){
+                 for(let i=0;i<mydata.length;i++){
+                 $(".mycontainer .tuijian-box").find(".tuijian-list").append("<li>"+mydata[i].tuijian+"</li>")
+             }
+             }
+        }
+    });
+}

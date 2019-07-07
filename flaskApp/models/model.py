@@ -99,3 +99,16 @@ class Regression(db.Model):
     exp = db.Column(db.String(20), primary_key=True) #经验要求
     edu = db.Column(db.String(20), primary_key=True) #学历
     salaryExpect = db.Column(db.FLOAT) #期望薪水
+
+#用户信息
+class User(db.Model):
+    __tablename__ = "user"
+    username = db.Column(db.String(20), primary_key=True)  # 用户名
+    password = db.Column(db.String(20))  # 密码
+
+#用户关注信息
+class Attention(db.Model):
+    __tablename__ = "attention"
+    attid = db.Column(db.String(20), primary_key=True)  # 用户关注ID
+    username = db.Column(db.String(20), primary_key=True)  # 用户名
+    topicname = db.Column(db.String(20)) #关注名称

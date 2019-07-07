@@ -1,17 +1,11 @@
 import json
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,request,session
 
 from config import db
-from models.model import CitySalary,CityPeople,CityScale,ExperienceCity,CompanyFinance,CompanyCount,Experience,JobSalary,LanguageSalary,Industryinfo,Regression
-
+from models.model import CitySalary,CityPeople,CityScale,ExperienceCity,CompanyFinance,CompanyCount,Experience,JobSalary,LanguageSalary,Industryinfo,Regression,User,Attention
+import random
 analysis = Blueprint('webaccess', __name__)
-
-
-@analysis.route('/')
-def hello_world():
-    return render_template("index1.html")
-
 
 # @analysis.route('/get_data')
 # def get_data():
@@ -247,3 +241,86 @@ def get_expsalary():
     [build_view_data(item) for item in data]
 
     return json.dumps(view_data, ensure_ascii=False)
+
+@analysis.route('/post_attention',methods=["GET", "POST"])
+def post_attention():
+    data = request.get_json()
+    topicname = data.get("topicname")
+    if topicname:
+        id = random.randint(0,10000)
+        db.session.execute("SET NAMES utf8")
+        new = Attention(attid=id,username=session.get("username"),topicname=topicname)
+        db.session.add(new)
+        db.session.commit()
+        return "ok"
+    else:
+        return "fail"
+
+@analysis.route('/get_attention',methods=["GET", "POST"])
+def get_attention():
+    if session["username"]:
+        data = db.session.query(Attention).filter(Attention.username==session["username"]).all()
+        view_data = {}
+        view_data["series_data"] = []
+
+        def build_view_data(item):
+            tmp_dic = {}
+            tmp_dic["topicname"] = item.topicname
+
+            view_data["series_data"].append(tmp_dic)
+
+        [build_view_data(item) for item in data]
+
+        return json.dumps(view_data, ensure_ascii=False)
+
+@analysis.route('/post_cancel',methods=["GET", "POST"])
+def post_cancel():
+    data = request.get_json()
+    topicname = data.get("topicname")
+    if topicname:
+        db.session.execute("SET NAMES utf8")
+        db.session.query(Attention).filter(Attention.topicname==topicname,Attention.username==session["username"]).delete()
+        db.session.commit()
+        return "ok"
+    else:
+        return "fail"
+
+#生成相关推荐
+@analysis.route('/get_tuijian',methods=["GET", "POST"])
+def get_tuijian():
+    if session["username"]:
+        data = db.session.query(Attention).filter(Attention.username==session["username"]).all()
+        uname_list = []
+        tname_list = []
+        for item in data:
+            tname = item.topicname
+            same_topic = db.session.query(Attention).filter(Attention.topicname == tname).all()#找出所有与当前用户关注标题相同的字段
+            for item in same_topic:
+                uname_list.append(item.username)  #把标题相同的用户名放进数组里面
+            tname_list.append(tname) #把当前用户关注标题加到一个数组里面
+        #计算数组中出现次数最多的2个用户(除了当前登录用户)
+        uname_dic={}
+        for uname in uname_list:
+            uname_dic[uname] = 0
+        for uname in uname_list:
+            uname_dic[uname] = uname_dic[uname]+1
+        #对字典排序
+        slist = sorted(uname_dic.items(), key=lambda x: x[1],reverse=True)
+        first = slist[0][1] #列表中第一个元组是当前登录用户或者关注完全相同的用户
+        new_slist=list(filter(lambda x:x[1]!=first,slist))   #过滤表中与登录用户关注完全相同的用户
+        result_list=[]
+        for i in range(0,2):
+            same_user = db.session.query(Attention).filter(Attention.username == new_slist[i][0]).all()
+            for item in same_user:
+                topic = item.topicname
+                if topic not in tname_list:      #如果该用户关注的标题不在当前用户关注的标题列表中
+                    result_list.append(topic)
+        new_list = list({}.fromkeys(result_list).keys())      #列表去重
+        print(new_list)
+        view_data = {}
+        view_data["series_data"] = []
+        for item in new_list:
+            tmp_dic = {}
+            tmp_dic["tuijian"]= item
+            view_data["series_data"].append(tmp_dic)
+        return json.dumps(view_data, ensure_ascii=False)

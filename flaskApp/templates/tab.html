@@ -32,6 +32,11 @@
         <div class="center-top">
                 <h1>互联网职位大数据分析</h1>
         </div>
+        {% if name %}
+        <div class="username-box">当前用户名：<a href="userspace" style="color:#fff;font-size: 12px">{{name}}</a></div>
+        {% else %}
+        <div class="username-box">未登录</div>
+        {% endif %}
     </header>
     <div class="mycontainer">
         <div class="switch-box">

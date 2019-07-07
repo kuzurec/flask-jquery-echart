@@ -64,12 +64,17 @@
         <div class="center-top">
                 <h1>互联网职位大数据分析</h1>
         </div>
+        {% if name %}
+        <div class="username-box">当前用户名：<a href="userspace" style="color:#fff;font-size: 12px">{{name}}</a></div>
+        {% else %}
+        <div class="username-box">未登录</div>
+        {% endif %}
     </header>
     <div class="container-flex" tabindex="0" hidefocus="true">
         <div class="box-left">
             <div class="left-top" >
                 <div class="boxall" style="height: 100%">
-                     <div class="alltitle">年度热词</div>
+                     <div class="alltitle">公司热词</div>
                      <div class="chart-box" style="top:35px">
                          <div style="text-align: center">
                          <canvas width="240px" height="240px" id="myCanvas" style=""></canvas>
@@ -151,7 +156,7 @@
                 </div> -->
                 <!-- <img src="mySVG.svg" class="mysvg" alt="" /> -->
                 <div class="chart-box">
-                    <div id="chart4" style="width:100%;height:100%"></div>
+                    <div id="chart1s" style="width:100%;height:100%"></div>
                 </div>
                 
             </div>

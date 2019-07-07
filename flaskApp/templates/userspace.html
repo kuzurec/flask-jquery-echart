@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户空间</title>
+	<link rel="stylesheet" href="../static/css/style.css">
+	<script type="text/javascript" src="../static/js/rem.js"></script>
+</head>
+<body style="visibility: hidden;overflow: hidden;">
+      <header class="myheader">
+        <nav class="nav_box">
+            <ul class="myul">
+                <li>
+                    <a href="index1" >主页</a>
+                </li>
+                <li>
+                    <a href="city">城市</a>
+                </li>
+                <li>
+                    <a href="company">公司</a>
+                </li>
+                <li>
+                    <a href="job">岗位</a>
+                </li>
+                <li>
+                    <a href="tab">求职标签面板</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="center-top">
+                <h1>互联网职位大数据分析</h1>
+        </div>
+        {% if name %}
+        <div class="username-box">当前用户名：<a href="userspace" style="color:#fff;font-size: 12px">{{name}}</a></div>
+        {% else %}
+        <div class="username-box">未登录</div>
+        {% endif %}
+    </header>
+     <div class="mycontainer">
+     	<div style="display: flex;flex-direction: column;width: 80%;height: 80%;position: absolute;left: 10%;top: 10%">
+     		<div class="attention-box">
+     		     <h3 style="color: #fff;font-size: 20px;font-weight: bold;">| 我的关注</h3><br/><br/>
+                 <ul class="attention-list">
+                 </ul>
+	     	</div>
+	     	<div class="tuijian-box">
+	     		<h3 style="color: #fff;font-size: 20px;font-weight: bold;">| 相关推荐</h3><br/><br/>
+	     		<ul class="tuijian-list">
+	     		</ul>
+	     	</div>
+     	</div>
+     </div>
+</body>
+<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../static/js/base.js"></script>
+<script type="text/javascript">
+	$(function(){
+        $("body").css('visibility', 'visible');
+	})
+	
+</script>
+</html>
