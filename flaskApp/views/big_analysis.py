@@ -307,16 +307,16 @@ def get_tuijian():
         #对字典排序
         slist = sorted(uname_dic.items(), key=lambda x: x[1],reverse=True)
         first = slist[0][1] #列表中第一个元组是当前登录用户或者关注完全相同的用户
-        new_slist=list(filter(lambda x:x[1]!=first,slist))   #过滤表中与登录用户关注完全相同的用户
         result_list=[]
-        for i in range(0,2):
-            same_user = db.session.query(Attention).filter(Attention.username == new_slist[i][0]).all()
+        for i in range(len(slist)):
+            same_user = db.session.query(Attention).filter(Attention.username == slist[i][0]).all()
             for item in same_user:
                 topic = item.topicname
                 if topic not in tname_list:      #如果该用户关注的标题不在当前用户关注的标题列表中
                     result_list.append(topic)
         new_list = list({}.fromkeys(result_list).keys())      #列表去重
-        print(new_list)
+        if len(new_list)>8:
+            new_list = new_list[:8]  #只取前八个推荐
         view_data = {}
         view_data["series_data"] = []
         for item in new_list:
