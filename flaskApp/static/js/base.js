@@ -557,14 +557,12 @@ option = {
         type: "GET",
         dataType: "json",
         success: function (data) {
-     // alert(JSON.stringify(data["series_data"][0].name));
            if($("#chart3").length>0){
               chart3(data);
             }
-
-        }
+         }
     });
-})()////
+})()
 function chart3(mydata){
     var mychart = echarts.init(document.getElementById("chart3"));
     var data = mydata["series_data"];
@@ -2707,7 +2705,6 @@ function chart15(mydata){
     option = {
     backgroundColor:"#0B1837",
     color: ["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05"],
-
     grid: {
         left: -100,
         top: 50,
